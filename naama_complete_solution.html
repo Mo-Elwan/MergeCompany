@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة نما - التصور التفاعلي المتكامل لنقل وتصحيح التراخيص</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
+    * { font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
+    .naama-green { background-color: #127845; }
+    .naama-green-text { color: #127845; }
+    .naama-light-green { background-color: #eaf6ee; }
+    .mewa-gold { color: #d4af37; }
+    .mewa-bg-gold { background-color: #d4af37; }
+    .watermark-archive {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(220, 38, 38, 0.12);
+      pointer-events: none;
+      white-space: nowrap;
+      text-transform: uppercase;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body class="bg-[#f8faf9] text-[#2d3748] min-h-screen antialiased selection:bg-[#127845] selection:text-white pb-20">
+
+  <!-- ======================================================== -->
+  <!-- TOP GLOBAL NAV BAR (MATCHING UPLOADED NAAMA SCREENSHOT) -->
+  <!-- ======================================================== -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Micro top bar -->
+      <div class="flex items-center justify-between py-2 text-xs text-gray-500 border-b border-gray-50">
+        <div class="flex items-center gap-4">
+          <button class="hover:text-[#127845] flex items-center gap-1 font-semibold">
+            <span>🌐 English</span>
+          </button>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 text-gray-700 font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>المنشأة الحالية: <strong class="text-gray-900" id="topSessionCR">7001811954 (فرعي)</strong></span>
+          </div>
+          <a href="#" class="hover:text-[#127845] flex items-center gap-1 font-bold text-gray-800">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            تسجيل الدخول
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Portal Navigation -->
+      <div class="flex items-center justify-between h-20">
+        <!-- Brand & MEWA Emblem -->
+        <div class="flex items-center gap-4">
+          <!-- Official Naama Logo -->
+          <div class="flex items-center cursor-pointer py-1" onclick="goToStep('directory')" title="منصة نما للخدمات الإلكترونية">
+            <img src="naama_logo.png" onerror="this.src='data:image/png;base64,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'" alt="منصة نما NAAMA" class="h-12 w-auto object-contain">
+          </div>
+
+          <div class="h-8 w-px bg-gray-200 hidden md:block"></div>
+
+          <!-- MEWA Official Label -->
+          <div class="hidden md:flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full border border-gray-100 p-1 flex items-center justify-center bg-white shadow-2xs">
+              <svg class="w-6 h-6 text-[#127845]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-.778.099-1.533.284-2.253"/>
+              </svg>
+            </div>
+            <div class="text-[11px] font-bold text-gray-700 leading-3">
+              وزارة البيئة والمياه والزراعة
+              <span class="block text-[9px] font-normal text-gray-400">المملكة العربية السعودية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Links Navigation -->
+        <nav class="hidden lg:flex items-center space-x-reverse space-x-1 text-sm font-semibold text-gray-600">
+          <a href="#" onclick="goToStep('directory')" class="px-3 py-2 rounded-lg hover:text-[#127845] transition">الرئيسية</a>
+          <a href="#" onclick="goToStep('directory')" class="px-5 py-2.5 rounded-lg bg-[#127845] text-white shadow-xs font-bold flex items-center gap-1.5">
+            دليل الخدمات الإلكترونية
+          </a>
+          <a href="#" class="px-3 py-2 rounded-lg hover:text-[#127845] transition">الأخبار والأحداث</a>
+          <a href="#" class="px-3 py-2 rounded-lg hover:text-[#127845] transition">عن نما</a>
+          <a href="#" class="px-3 py-2 rounded-lg hover:text-[#127845] transition">الأسئلة الشائعة</a>
+          <a href="#" class="px-3 py-2 rounded-lg hover:text-[#127845] transition">تواصل معنا</a>
+        </nav>
+
+        <!-- Search input box -->
+        <div class="relative w-56 lg:w-64">
+          <input type="text" placeholder="ابحث هنا ..." class="w-full text-xs bg-gray-50 border border-gray-200 rounded-lg py-2.5 pr-9 pl-3 focus:outline-none focus:border-[#127845] focus:bg-white transition text-gray-700">
+          <svg class="w-4 h-4 text-gray-400 absolute right-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- INTERACTIVE FLOW BAR (NAVIGATE BETWEEN WORKFLOW PHASES)  -->
+  <!-- ======================================================== -->
+  <div class="bg-[#0b4827] text-white py-2.5 px-4 sticky top-20 z-30 shadow-md border-b border-[#127845]/50">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#d4af37] animate-ping"></span>
+        <span class="text-xs font-bold text-[#fbf3d5]">شريط دورة الحل المتكامل:</span>
+        <span class="text-[11px] text-emerald-200 hidden md:inline">انقر للتنقل المباشر وتجربة كافة المحطات:</span>
+      </div>
+
+      <!-- 5 Interactive Workflow Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto text-xs font-bold">
+        <button onclick="goToStep('directory')" id="tabBtn_directory" class="px-3 py-1.5 rounded-xl bg-[#127845] text-white shadow-xs transition flex items-center gap-1">
+          <span>1. دليل الخدمات</span>
+        </button>
+        <button onclick="goToStep('apply')" id="tabBtn_apply" class="px-3 py-1.5 rounded-xl bg-[#0e5c32]/70 hover:bg-[#127845] text-emerald-100 transition flex items-center gap-1">
+          <span>2. شاشة التقديم</span>
+        </button>
+        <button onclick="goToStep('approver')" id="tabBtn_approver" class="px-3 py-1.5 rounded-xl bg-[#0e5c32]/70 hover:bg-[#127845] text-emerald-100 transition flex items-center gap-1">
+          <span>3. موافقة المفوض المستلم</span>
+        </button>
+        <button onclick="goToStep('ministry')" id="tabBtn_ministry" class="px-3 py-1.5 rounded-xl bg-[#0e5c32]/70 hover:bg-[#127845] text-emerald-100 transition flex items-center gap-1">
+          <span>4. دراسة واعتماد الوزارة</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ======================================================== -->
+    <!-- STAGE 1: SERVICES DIRECTORY (IDENTICAL TO USER PHOTO)    -->
+    <!-- ======================================================== -->
+    <div id="step_directory" class="space-y-6">
+      
+      <!-- Section Title & Counter -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-gray-200/80 gap-4">
+        <div>
+          <h1 class="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
+            جميع الخدمات
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#127845] bg-[#eaf6ee] px-3 py-1 rounded-full border border-[#127845]/20">
+              <span class="w-2 h-2 rounded-full bg-[#127845]"></span> (460) خدمة رئيسية
+            </span>
+            <span class="inline-flex items-center text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+              (1190) خدمة فرعية
+            </span>
+          </h1>
+          <p class="text-xs text-gray-500 mt-1">تصفح وقدم على كافة الخدمات والأنشطة التابعة لوزارة البيئة والمياه والزراعة</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="text-xs font-semibold text-gray-600 bg-white border border-gray-200 rounded-lg px-3.5 py-2 hover:bg-gray-50 flex items-center gap-1.5 shadow-2xs">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
+            ترتيب الخدمات
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Layout: Sidebar + Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Sidebar Filters -->
+        <aside class="lg:col-span-1 space-y-6">
+          <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-base font-bold text-gray-900 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#127845]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                تصفية البحث
+              </h2>
+              <button class="text-[11px] text-[#127845] hover:underline font-semibold">إعادة تعيين</button>
+            </div>
+
+            <!-- Categories -->
+            <div class="space-y-3 pb-5 border-b border-gray-100">
+              <h3 class="text-xs font-bold text-gray-700">فئات المستفيدين</h3>
+              <label class="flex items-center justify-between text-xs text-gray-600 cursor-pointer">
+                <span>الجمعيات التطوعية</span>
+                <span class="text-gray-400 text-[11px]">(84)</span>
+              </label>
+              <label class="flex items-center justify-between text-xs text-gray-600 cursor-pointer">
+                <span>جهات حكومية</span>
+                <span class="text-gray-400 text-[11px]">(945)</span>
+              </label>
+              <label class="flex items-center justify-between text-xs text-gray-600 cursor-pointer">
+                <span>أفراد</span>
+                <span class="text-gray-400 text-[11px]">(967)</span>
+              </label>
+              <label class="flex items-center justify-between text-xs text-gray-600 cursor-pointer">
+                <span>زوار المملكة</span>
+                <span class="text-gray-400 text-[11px]">(30)</span>
+              </label>
+              <!-- Highlighted Category -->
+              <label class="flex items-center justify-between text-xs font-bold text-[#127845] cursor-pointer bg-[#eaf6ee] -mx-2 px-2 py-1.5 rounded-lg border border-[#127845]/20">
+                <span class="flex items-center gap-2">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-[#127845]">
+                  قطاع أعمال
+                </span>
+                <span class="text-[#127845] text-[11px] font-bold">(1066)</span>
+              </label>
+            </div>
+
+            <!-- Sectors -->
+            <div class="space-y-3 pt-5">
+              <h3 class="text-xs font-bold text-gray-700">القطاعات</h3>
+              <label class="flex items-center justify-between text-xs text-gray-600 cursor-pointer font-bold text-gray-900">
+                <span class="flex items-center gap-2">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-[#127845]">
+                  قطاع الزراعة
+                </span>
+                <span class="text-gray-400 text-[11px]">(1059)</span>
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Services Cards Grid -->
+        <section class="lg:col-span-3 space-y-6">
+
+          <!-- Notice Banner for Correction -->
+          <div class="bg-gradient-to-r from-emerald-50 via-[#f0f9f3] to-white border-r-4 border-[#127845] rounded-xl p-4 shadow-xs flex items-center justify-between">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-full bg-[#127845]/10 text-[#127845] flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-gray-900">تنفيذ قرار وزير التجارة رقم (288) لتصحيح السجلات الفرعية</h4>
+                <p class="text-[11px] text-gray-600 leading-relaxed mt-0.5">
+                  تم إطلاق خدمة تصحيح ونقل تراخيص السجلات التجارية إلكترونياً لنقل التراخيص والخدمات إلى السجل الرئيسي أو لشركة جديدة.
+                </p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold bg-[#127845] text-white px-2.5 py-1 rounded-md hidden sm:inline-block">
+              خدمة معتمدة 2026
+            </span>
+          </div>
+
+          <!-- Cards Layout -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- CARD 1: THE NEW PROPOSED SERVICE (Primary Highlight) -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-[#127845] shadow-lg shadow-green-900/5 hover:shadow-xl transition flex flex-col justify-between relative group">
+              
+              <div class="absolute -top-3 right-6 bg-[#127845] text-white text-[10px] font-black px-3 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+                خدمة جديدة مصرحة
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-4 mt-1">
+                  <div class="w-13 h-13 rounded-2xl bg-[#eaf6ee] text-[#127845] flex items-center justify-center shadow-inner group-hover:scale-105 transition">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                  </div>
+                  <span class="text-[11px] font-bold text-[#127845] bg-[#eaf6ee] px-3 py-1 rounded-full border border-[#127845]/20">
+                    ربط آلي مباشر
+                  </span>
+                </div>
+
+                <h3 class="text-lg font-black text-gray-900 group-hover:text-[#127845] transition mb-2">
+                  نقل وتصحيح تراخيص السجلات التجارية
+                </h3>
+
+                <p class="text-xs text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                  خدمة تتيح للمنشآت تصحيح أوضاع سجلاتها الفرعية ونقل التراخيص والخدمات الزراعية إلى السجل التجاري الرئيسي بعد الشطب أو إلى شركة جديدة مع استمرار سريان التراخيص.
+                </p>
+
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] font-semibold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-lg">قطاع الأعمال</span>
+                  <span class="text-[11px] font-bold text-[#127845] bg-[#eaf6ee] px-2.5 py-1 rounded-lg">تصحيح السجلات</span>
+                  <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-1 rounded-lg">مجانية</span>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-gray-100 flex items-center gap-3">
+                <button onclick="openCardModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-1.5">
+                  <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span>الشروط والمواصفات</span>
+                </button>
+                <button onclick="goToStep('apply')" class="flex-1 bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-1.5">
+                  <span>بدء الخدمة</span>
+                  <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- CARD 2: EXISTING SERVICE (From User Image) -->
+            <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-13 h-13 rounded-2xl bg-[#eaf6ee] text-[#127845] flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                  </div>
+                  <span class="text-[11px] font-semibold text-gray-500 bg-gray-50 px-2.5 py-1 rounded-full">1 خدمة فرعية</span>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">شهادة سعودي قاب لمزارع الدواجن خارج المملكة</h3>
+                <p class="text-xs text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                  خدمة تتيح لمزارع الدواجن خارج المملكة الحصول على شهادة الممارسات الزراعية الجيدة السعودية بعد استيفاء المعايير...
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] text-gray-600 bg-gray-100 px-2.5 py-1 rounded-lg">قطاع الزراعة</span>
+                  <span class="text-[11px] text-gray-600 bg-gray-100 px-2.5 py-1 rounded-lg">سعودي قاب</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-gray-100">
+                <button class="w-full bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3 rounded-xl">اختر الخدمة ↗</button>
+              </div>
+            </div>
+
+            <!-- CARD 3: EXISTING SERVICE (From User Image) -->
+            <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <div class="w-13 h-13 rounded-2xl bg-[#eaf6ee] text-[#127845] flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                  </div>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">طلب كمية مياه اضافية</h3>
+                <p class="text-xs text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                  دراسة تخصيص كمية إضافية من المياه بعد تحديث المساحة المروية للمشاريع الزراعية القائمة...
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="text-[11px] text-gray-600 bg-gray-100 px-2.5 py-1 rounded-lg">قطاع الزراعة</span>
+                  <span class="text-[11px] text-gray-600 bg-gray-100 px-2.5 py-1 rounded-lg">خدمات المياه</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-gray-100">
+                <button class="w-full bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3 rounded-xl">تفاصيل الخدمة ←</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- STAGE 2: APPLICATION FLOW (BRANCH CR CONTEXT & CHECKS)   -->
+    <!-- ======================================================== -->
+    <div id="step_apply" class="hidden max-w-4xl mx-auto space-y-6">
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center text-xs text-gray-500 gap-2 font-medium">
+        <a href="#" onclick="goToStep('directory')" class="hover:text-[#127845]">دليل الخدمات</a>
+        <span>/</span>
+        <span class="text-gray-900 font-bold">تقديم طلب نقل وتصحيح التراخيص</span>
+      </nav>
+
+      <!-- Step Banner -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs">
+        <div class="flex items-start justify-between flex-wrap gap-4">
+          <div>
+            <span class="text-[11px] font-bold text-[#127845] bg-[#eaf6ee] px-2.5 py-1 rounded-md border border-[#127845]/20">
+              قرار وزير التجارة رقم (288)
+            </span>
+            <h1 class="text-2xl font-black text-gray-900 mt-2">طلب نقل وتصحيح التراخيص والخدمات</h1>
+            <p class="text-xs text-gray-500 mt-1">توفيق أوضاع سجلات الشركة الفرعية ونقل الأصول الرقمية والتراخيص الصادرة وقيد المعالجة.</p>
+          </div>
+          <div class="text-left bg-gray-50 p-3 rounded-xl border border-gray-200">
+            <span class="text-[10px] text-gray-400 block font-bold">رقم المسودة</span>
+            <span class="text-xs font-mono font-black text-gray-800">REQ-2026-98124</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: Single Loaded Branch CR & Activities View -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+          <h2 class="text-sm font-extrabold text-gray-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-[#eaf6ee] text-[#127845] flex items-center justify-center text-xs font-bold">1</span>
+            بيانات السجل التجاري الحالي وتأكيد الصفة (التحقق الآلي)
+          </h2>
+          <span class="text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-full flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            سجل تجاري فرعي مؤهل للنقل
+          </span>
+        </div>
+
+        <!-- Single CR Card (Branch) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50/70 p-4 rounded-2xl border border-gray-100">
+          <div>
+            <span class="text-[11px] text-gray-500 block">رقم السجل التجاري الفرعي:</span>
+            <span class="text-sm font-mono font-bold text-gray-900">7001811954</span>
+          </div>
+          <div>
+            <span class="text-[11px] text-gray-500 block">الاسم التجاري للفرع:</span>
+            <span class="text-xs font-bold text-gray-900">شركة النخيل أجري الزراعية - فرع الرياض</span>
+          </div>
+          <div>
+            <span class="text-[11px] text-gray-500 block">اسم الشركة الأم / المنشأة:</span>
+            <span class="text-xs font-bold text-gray-900">شركة النخيل أجري الزراعية (ذ.م.م)</span>
+          </div>
+        </div>
+
+        <!-- Branch Activities (View Only) -->
+        <div class="bg-gray-50/50 rounded-2xl p-4 border border-gray-100 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+              الأنشطة الاقتصادية المقيدة بالسجل الفرعي (للعرض فقط):
+            </span>
+            <span class="text-[10px] bg-white border border-gray-200 px-2 py-0.5 rounded text-gray-500 font-semibold">3 أنشطة مسجلة</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+            <div class="bg-white p-2.5 rounded-xl border border-gray-200 text-[11px] text-gray-700">
+              <span class="font-mono text-[10px] text-gray-400 block">رمز النشاط: 466901</span>
+              <span class="font-semibold">بيع وتداول المواد والمخصبات الزراعية</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-gray-200 text-[11px] text-gray-700">
+              <span class="font-mono text-[10px] text-gray-400 block">رمز النشاط: 462012</span>
+              <span class="font-semibold">استيراد وتجارة المبيدات الحشرية النباتية</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-gray-200 text-[11px] text-gray-700">
+              <span class="font-mono text-[10px] text-gray-400 block">رمز النشاط: 462014</span>
+              <span class="font-semibold">تجارة البذور والتقاوي والبيوت المحمية</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2: Correction Scenarios Selection -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs space-y-5">
+        <div class="pb-3 border-b border-gray-100">
+          <h2 class="text-sm font-extrabold text-gray-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-[#eaf6ee] text-[#127845] flex items-center justify-center text-xs font-bold">2</span>
+            تحديد مسار التصحيح المطلوب
+          </h2>
+          <p class="text-xs text-gray-500 mt-1">اختر الإجراء النظامي المتخذ حيال هذا السجل التجاري الفرعي:</p>
+        </div>
+
+        <!-- Radios -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Path 1: Merge into Main -->
+          <label class="relative flex flex-col p-4 rounded-2xl border-2 border-[#127845] bg-[#eaf6ee]/40 cursor-pointer transition" id="card_opt_merge">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-black text-gray-900 flex items-center gap-2">
+                <input type="radio" name="flowPath" value="merge" checked onchange="onPathSelectionChange('merge')" class="text-[#127845] focus:ring-[#127845] w-4 h-4">
+                شطب السجل والدمج مع الرئيسي
+              </span>
+              <span class="text-[10px] font-bold bg-[#127845] text-white px-2 py-0.5 rounded">مباشر / بدون مراجعة وزارة</span>
+            </div>
+            <p class="text-[11px] text-gray-600 leading-relaxed mt-1">
+              نقل وربط كافة التراخيص والخدمات مباشرة بالسجل الرئيسي بعد شطب الفرعي وموافقة مفوض السجل الرئيسي إلكترونياً.
+            </p>
+          </label>
+
+          <!-- Path 2: New Company -->
+          <label class="relative flex flex-col p-4 rounded-2xl border border-gray-200 hover:border-gray-300 bg-white cursor-pointer transition" id="card_opt_newCompany">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-black text-gray-900 flex items-center gap-2">
+                <input type="radio" name="flowPath" value="newCompany" onchange="onPathSelectionChange('newCompany')" class="text-[#127845] focus:ring-[#127845] w-4 h-4">
+                تحويل السجل وتأسيس شركة جديدة
+              </span>
+              <span class="text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded">يتطلب اعتماد الوزارة</span>
+            </div>
+            <p class="text-[11px] text-gray-600 leading-relaxed mt-1">
+              فصل الفرع وتأسيس شركة جديدة كشخصية اعتبارية مستقلة، ويخضع لاعتماد مفوض الشركة أولاً ثم موافقة الوزارة.
+            </p>
+          </label>
+        </div>
+
+        <!-- DYNAMIC PATH 1: MERGE INTO MAIN DETAILS -->
+        <div id="container_path_merge" class="space-y-4 pt-2">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-[#127845]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                نتائج التحقق الفوري مع وزارة التجارة
+              </span>
+              <span class="text-[10px] text-gray-400">تحديث لحظي</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div class="bg-white p-3 rounded-xl border border-gray-200 flex items-center justify-between">
+                <span>حالة السجل الفرعي (7001811954):</span>
+                <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">مشطوب رسمياً ✅</span>
+              </div>
+              <div class="bg-white p-3 rounded-xl border border-gray-200 flex items-center justify-between">
+                <span>تبعية السجل الرئيسي للفرعي:</span>
+                <span class="font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">متطابق (نفس الكيان) ✅</span>
+              </div>
+            </div>
+
+            <!-- Main CR Discovered Card -->
+            <div class="bg-white p-3.5 rounded-xl border border-gray-200 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="text-[11px] text-gray-500 block">السجل التجاري الرئيسي المكتشف المستهدف بالنقل:</span>
+                  <div class="flex items-center gap-2 mt-0.5">
+                    <span class="text-sm font-mono font-bold text-gray-900">7001560993</span>
+                    <span class="text-xs font-bold text-gray-700">شركة النخيل أجري الزراعية (المركز الرئيسي)</span>
+                  </div>
+                </div>
+                <span class="text-[11px] font-bold text-[#127845] bg-[#eaf6ee] px-2.5 py-0.5 rounded">سارٍ حتى 1449/05/20هـ</span>
+              </div>
+
+              <!-- Main CR Activities & Match -->
+              <div class="pt-3 border-t border-gray-100 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold text-gray-800">الأنشطة المقيدة بالسجل الرئيسي (للعرض فقط):</span>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                    مطابقة للأنشطة المطلوب نقلها ✅
+                  </span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-gray-700">
+                  <div class="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-between">
+                    <span>466901 - بيع وتداول المواد والمخصبات الزراعية</span>
+                    <span class="text-emerald-700 font-bold text-[10px]">متطابق ✓</span>
+                  </div>
+                  <div class="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-between">
+                    <span>462012 - استيراد وتجارة المبيدات الحشرية النباتية</span>
+                    <span class="text-emerald-700 font-bold text-[10px]">متطابق ✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Validation of Existence in Namaa Platform -->
+            <div class="pt-2">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-700">حالة السجل الرئيسي في منصة نما:</span>
+                <div class="flex items-center gap-1.5 text-[11px]">
+                  <span class="text-gray-400">محاكاة:</span>
+                  <button type="button" onclick="toggleMainInNamaa(true)" id="simBtn_mainExists" class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">مسجل في نما ✅</button>
+                  <button type="button" onclick="toggleMainInNamaa(false)" id="simBtn_mainNotExists" class="px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300">غير مسجل في نما ❌</button>
+                </div>
+              </div>
+
+              <div id="alert_mainInNamaa_success" class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                  <span>السجل التجاري الرئيسي مسجل ومفعّل في منصة نما.</span>
+                </div>
+                <span class="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded shadow-2xs">جاهز للاستلام</span>
+              </div>
+
+              <div id="alert_mainInNamaa_error" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 space-y-2">
+                <div class="flex items-center gap-2 font-bold text-rose-900">
+                  <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  <span>تعذر استكمال الطلب: السجل الرئيسي غير مسجل في منصة نما</span>
+                </div>
+                <p class="text-[11px] text-rose-700 leading-relaxed">
+                  يجب تسجيل بيانات الشركة الرئيسية (السجل رقم 7001560993) في منصة نما أولاً وتعيين المفوض النظامي لها قبل المتابعة.
+                </p>
+                <button type="button" onclick="alert('الانتقال لصفحة تسجيل بيانات السجل التجاري في نما...')" class="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-rose-700 hover:bg-rose-800 px-3.5 py-1.5 rounded-lg shadow-2xs">
+                  <span>تسجيل بيانات الشركة الرئيسية في نما الآن</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DYNAMIC PATH 2: NEW COMPANY DETAILS -->
+        <div id="container_path_newCompany" class="hidden space-y-4 pt-2">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+              <h3 class="text-xs font-bold text-gray-900">بيانات الشركة الجديدة والتحقق من التسجيل في نما</h3>
+              <div class="flex items-center gap-1.5 text-[11px]">
+                <span class="text-gray-400">محاكاة:</span>
+                <button type="button" onclick="toggleNewCompanyInNamaa(true)" id="simBtn_newExists" class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">مسجلة في نما ✅</button>
+                <button type="button" onclick="toggleNewCompanyInNamaa(false)" id="simBtn_newNotExists" class="px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300">غير مسجلة في نما ❌</button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-gray-700 mb-1">أدخل رقم السجل التجاري للشركة الجديدة:</label>
+                <input type="text" id="input_newCRNumber" value="7002998114" class="w-full text-xs bg-white border border-gray-200 rounded-xl p-2.5 font-mono focus:border-[#127845] focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-gray-700 mb-1">اسم الشركة الجديدة:</label>
+                <input type="text" value="شركة النخيل للصناعات الزراعية المتقدمة" class="w-full text-xs bg-gray-100 border border-gray-200 rounded-xl p-2.5 text-gray-800" readonly>
+              </div>
+            </div>
+
+            <div id="alert_newInNamaa_success" class="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-800 flex items-center justify-between">
+              <span>السجل التجاري للشركة الجديدة <strong>مسجل ومفعّل في منصة نما</strong>.</span>
+              <span class="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded">جاهز للربط</span>
+            </div>
+
+            <div id="alert_newInNamaa_error" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 space-y-2">
+              <span class="font-bold text-rose-900 block">تعذر استكمال الطلب: السجل التجاري للشركة الجديدة غير مسجل في منصة نما</span>
+              <p class="text-[11px] text-rose-700">يجب تسجيل وتفعيل الشركة الجديدة في نما أولاً لنقل التراخيص إليها.</p>
+            </div>
+
+            <!-- New Company Activities & Matching Check -->
+            <div id="box_newCompanyActivities" class="bg-white p-3.5 rounded-xl border border-gray-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-gray-800">الأنشطة المقيدة بسجل الشركة الجديدة (للعرض فقط):</span>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">مطابقة للأنشطة المطلوب نقلها ✅</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-gray-700">
+                <div class="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-between">
+                  <span>466901 - بيع وتداول المواد والمخصبات الزراعية</span>
+                  <span class="text-emerald-700 font-bold text-[10px]">متطابق ✓</span>
+                </div>
+                <div class="bg-gray-50 p-2 rounded-lg border border-gray-100 flex items-center justify-between">
+                  <span>462012 - استيراد وتجارة المبيدات الحشرية النباتية</span>
+                  <span class="text-emerald-700 font-bold text-[10px]">متطابق ✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: Licenses & Applications to Transfer -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-xs space-y-3">
+        <h2 class="text-sm font-extrabold text-gray-900 flex items-center gap-2 pb-2 border-b border-gray-100">
+          <span class="w-6 h-6 rounded-lg bg-[#eaf6ee] text-[#127845] flex items-center justify-center text-xs font-bold">3</span>
+          التراخيص والطلبات المشمولة بالنقل (تُنقل دون فقدان الأرشيف)
+        </h2>
+        <div class="space-y-2 text-xs">
+          <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100">
+            <div>
+              <span class="font-bold text-gray-900 block">ترخيص استيراد وتداول المواد والمخصبات الزراعية</span>
+              <span class="text-[10px] text-gray-500 font-mono">رقم الترخيص: MEWA-AG-2024-8812 • ينتهي في 1449/01/15هـ</span>
+            </div>
+            <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">ترخيص سارٍ</span>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/60 border border-amber-200">
+            <div>
+              <span class="font-bold text-gray-900 block">شهادة سعودي قاب (رقم المعاملة: #99014)</span>
+              <span class="text-[10px] text-amber-800">قيد المعالجة والدراسة الفنية (تستكمل المعاملة بواسطة مفوضي الكيان الجديد)</span>
+            </div>
+            <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">قيد المعالجة</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="flex items-center justify-between pt-2">
+        <button onclick="goToStep('directory')" class="text-xs font-bold text-gray-500 hover:text-gray-800">إلغاء والعودة</button>
+        <button id="btn_submit_request" onclick="onSubmitApplication()" class="bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3.5 px-8 rounded-2xl shadow-lg transition flex items-center gap-2">
+          <span id="txt_submitBtnLabel">إرسال الطلب إلى مفوض السجل الرئيسي للموافقة</span>
+          <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- STAGE 3: DELEGATE APPROVAL (MAIN CR OR NEW COMPANY)      -->
+    <!-- ======================================================== -->
+    <div id="step_approver" class="hidden max-w-4xl mx-auto space-y-6">
+      
+      <!-- Approver Banner -->
+      <div class="bg-gradient-to-r from-[#0c4a28] via-[#127845] to-[#15884f] text-white rounded-3xl p-6 shadow-md">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <span id="badge_approverRole" class="text-[10px] font-bold bg-white/20 text-emerald-100 px-2.5 py-0.5 rounded-full">جلسة مفوض السجل التجاري الرئيسي</span>
+            <h1 id="title_approverHeader" class="text-xl font-black mt-2">اعتماد واستلام تراخيص السجل الفرعي المشطوب</h1>
+            <p id="sub_approverHeader" class="text-xs text-emerald-100 mt-1">السجل الرئيسي المستلم: 7001560993 (شركة النخيل أجري الزراعية)</p>
+          </div>
+          <div class="bg-white/10 p-3 rounded-2xl text-center">
+            <span class="text-[10px] text-emerald-200 block">رقم طلب النقل</span>
+            <span class="text-sm font-mono font-bold">REQ-2026-98124</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm space-y-5">
+        <div class="border-b border-gray-100 pb-4">
+          <h2 class="text-sm font-bold text-gray-900">إشعار طلب استلام ونقل التراخيص والمسؤوليات</h2>
+          <p id="desc_approverIntro" class="text-xs text-gray-600 mt-1 leading-relaxed">
+            قام مفوض السجل التجاري الفرعي (رقم: <strong>7001811954</strong>) بطلب نقل كافة التراخيص والخدمات الزراعية لتصبح مقيدة تحت سجلك التجاري.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="bg-red-50/50 p-4 rounded-2xl border border-red-100">
+            <span class="text-[10px] text-red-600 font-bold block mb-1">السجل المحال منه (الفرعي):</span>
+            <div class="font-bold text-gray-900 font-mono">7001811954</div>
+            <div class="text-[11px] text-gray-600">شركة النخيل أجري الزراعية - فرع الرياض</div>
+            <div class="text-[10px] text-red-700 font-semibold mt-2">الحالة بوزارة التجارة: مشطوب رسمياً ✅</div>
+          </div>
+
+          <div class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-200">
+            <span id="badge_approverTargetLabel" class="text-[10px] text-emerald-700 font-bold block mb-1">السجل المحال إليه (الرئيسي):</span>
+            <div id="txt_approverTargetCR" class="font-bold text-gray-900 font-mono">7001560993</div>
+            <div id="txt_approverTargetName" class="text-[11px] text-gray-600">شركة النخيل أجري الزراعية (المركز الرئيسي)</div>
+            <div class="text-[10px] text-emerald-700 font-semibold mt-2">حالة التسجيل في نما: مفعّل وجاهز للاستلام</div>
+          </div>
+        </div>
+
+        <!-- Direct vs Ministry Escalation Notice -->
+        <div id="notice_approverDirect" class="bg-emerald-50 border border-emerald-300 p-4 rounded-2xl text-xs text-emerald-950 flex items-start gap-3">
+          <span class="text-lg">⚡</span>
+          <div>
+            <span class="font-bold block">موافقة فورية ومباشرة بدون اعتماد الوزارة:</span>
+            <p class="text-[11px] text-emerald-900 mt-0.5 leading-relaxed">
+              بموجب قرار وزير التجارة رقم (288)، بمجرد نقرك على "أوافق على استلام التراخيص"، سيقوم النظام بنقل وربط كافة التراخيص بالسجل الرئيسي فوراً وبشكل آلي وإصدار الوثائق المحدثة دون الحاجة لانتظار موظفي الوزارة.
+            </p>
+          </div>
+        </div>
+
+        <div id="notice_approverNewCompany" class="hidden bg-blue-50 border border-blue-300 p-4 rounded-2xl text-xs text-blue-950 flex items-start gap-3">
+          <span class="text-lg">🏢</span>
+          <div>
+            <span class="font-bold block">موافقة مفوض الشركة الجديدة وإحالة المعاملة للوزارة:</span>
+            <p class="text-[11px] text-blue-900 mt-0.5 leading-relaxed">
+              بصفتك المفوض النظامي للشركة الجديدة، فإن موافقتك ستحيل المعاملة مباشرة إلى <strong>وزارة البيئة والمياه والزراعة</strong> لمراجعة الأنشطة وإصدار الاعتماد الفني النهائي.
+            </p>
+          </div>
+        </div>
+
+        <label class="flex items-start gap-3 text-xs text-gray-700 p-3 bg-gray-50 rounded-xl cursor-pointer">
+          <input type="checkbox" id="chk_approverConsent" checked class="mt-0.5 w-4 h-4 rounded text-[#127845]">
+          <span>أقر بصفتي المفوض النظامي بصحة البيانات وموافقتي على استلام التراخيص والمسؤوليات النظامية المرتبطة بالسجل المحال منه.</span>
+        </label>
+
+        <div class="flex items-center justify-between pt-2">
+          <button onclick="alert('تم رفض استلام التراخيص.')" class="text-xs font-bold text-rose-600 hover:text-rose-800">رفض الاستلام</button>
+          <button onclick="onExecuteApproverDecision()" class="bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3 px-6 rounded-xl shadow-md transition flex items-center gap-2">
+            <span id="txt_approverBtnLabel">أوافق على استلام التراخيص وتنفيذ النقل الفوري</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- STAGE 4: MINISTRY REVIEW (OFFICIAL MEWA IDENTITY)       -->
+    <!-- ======================================================== -->
+    <div id="step_ministry" class="hidden max-w-4xl mx-auto space-y-6">
+      
+      <!-- MEWA Official Header -->
+      <div class="bg-gradient-to-r from-[#0a4324] via-[#127845] to-[#15884f] text-white rounded-3xl p-6 shadow-lg border border-emerald-600/30">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold bg-white/15 text-emerald-50 border border-white/20 px-3 py-0.5 rounded-full">
+                بوابة موظفي الوزارة الداخلية — إدارة التراخيص الزراعية
+              </span>
+              <span class="text-[10px] font-bold bg-[#b8860b]/35 text-[#fff8db] border border-[#d4af37]/60 px-3 py-0.5 rounded-full">
+                بانتظار قرار الموظف
+              </span>
+            </div>
+            <h1 class="text-xl font-black mt-2 text-white">دراسة واعتماد طلب نقل تراخيص لشركة جديدة مؤسسة</h1>
+            <p class="text-xs text-emerald-100 mt-1">المعاملة تتضمن موافقة موثقة من الشركة الجديدة، وتخضع للمراجعة الفنية والاعتماد النهائي</p>
+          </div>
+          <div class="bg-black/15 border border-white/15 p-3 rounded-2xl text-center min-w-[130px]">
+            <span class="text-[10px] text-emerald-200 block">رقم المعاملة</span>
+            <span class="text-sm font-mono font-black text-white">REQ-2026-98124</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ministry Review Card -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm space-y-6">
+        
+        <!-- Parties & Activities Comparison -->
+        <div>
+          <h3 class="text-xs font-black text-gray-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <span class="w-1.5 h-3 bg-[#127845] rounded-full"></span>
+            1. أطراف طلب النقل ومطابقة الأنشطة
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-1">
+              <span class="text-[10px] font-bold text-red-700 bg-red-100/70 px-2 py-0.5 rounded">السجل الفرعي المحال منه</span>
+              <div class="font-bold text-gray-900 font-mono text-sm mt-1">7001811954</div>
+              <div class="text-gray-700 font-semibold">شركة النخيل أجري الزراعية - فرع الرياض</div>
+              <div class="text-[10px] text-gray-500 pt-2 border-t border-gray-200 mt-2">
+                الأنشطة: بيع وتداول المواد الزراعية (466901) • مبيدات (462012)
+              </div>
+            </div>
+
+            <div class="bg-[#f0f9f3] p-4 rounded-2xl border border-emerald-200 space-y-1">
+              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">الشركة الجديدة المحال إليها</span>
+              <div class="font-bold text-gray-900 font-mono text-sm mt-1">7002998114</div>
+              <div class="text-gray-700 font-semibold">شركة النخيل للصناعات الزراعية المتقدمة</div>
+              <div class="text-[10px] text-emerald-800 font-bold pt-2 border-t border-emerald-200 mt-2">
+                حالة مطابقة الأنشطة: متطابقة بنسبة 100% مع التراخيص السابقة ✅
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transferred Items -->
+        <div>
+          <h3 class="text-xs font-black text-gray-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span class="w-1.5 h-3 bg-[#127845] rounded-full"></span>
+            2. التراخيص والطلبات المشمولة بالنقل
+          </h3>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200">
+              <span class="font-bold text-gray-900">ترخيص استيراد وتداول المواد والمخصبات الزراعية (MEWA-AG-2024-8812)</span>
+              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">سارٍ حتى 1449هـ</span>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/60 border border-amber-200">
+              <span class="font-bold text-gray-900">شهادة سعودي قاب (#99014)</span>
+              <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded">قيد المعالجة</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documented Approval of New Company (With Timestamp) -->
+        <div class="bg-gradient-to-r from-emerald-50 via-[#f2faf5] to-emerald-50/50 border-2 border-emerald-300 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">✓</span>
+              <h4 class="text-xs font-black text-emerald-950">توثيق موافقة الشركة الجديدة المستلمة (رقم السجل: 7002998114)</h4>
+            </div>
+            <span class="text-[10px] font-bold text-emerald-800 bg-white border border-emerald-200 px-2.5 py-0.5 rounded-full shadow-2xs">
+              موافقة معتمدة رقمياً
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-3 rounded-xl border border-emerald-200 text-xs">
+            <div>
+              <span class="text-[10px] text-gray-500 block">حالة الموافقة:</span>
+              <span class="font-bold text-emerald-700 block mt-0.5">تمت الموافقة والقبول رسمياً ✅</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-gray-500 block">تاريخ وتوقيت الموافقة:</span>
+              <span id="ministry_txtApprovalDate" class="font-mono font-bold text-gray-900 block mt-0.5">1448/03/22هـ — 11:42:15 ص</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-gray-500 block">المفوض المعتمد:</span>
+              <span class="font-bold text-gray-800 block mt-0.5">المفوض النظامي للشركة الجديدة</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Governance Impact Banner -->
+        <div class="bg-amber-50/80 border border-amber-200 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-900">
+          <svg class="w-4 h-4 text-amber-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="leading-relaxed">
+            <span class="font-bold block text-amber-950">الأثر النظامي عند اعتماد الطلب:</span>
+            1) سيتم <strong>حظر التعامل</strong> على السجل الفرعي (1010345678) فورياً. <br>
+            2) سيتم <strong>إيقاف وتجميد كافة المفوضين</strong> المعتمدين على السجل الفرعي. <br>
+            3) سيتم <strong>نقل كافة الطلبات الجاري معالجتها</strong> إلى الشركة الجديدة، مع <strong>منح مفوضي الشركة الجديدة صلاحية استكمال العمل عليها</strong>.
+          </div>
+        </div>
+
+        <!-- Notes Textarea -->
+        <div>
+          <label class="block text-xs font-bold text-gray-800 mb-1.5 flex items-center justify-between">
+            <span>ملاحظات وتوصية موظف الوزارة (إلزامية في حال الرفض أو الإرجاع):</span>
+            <span class="text-[10px] text-gray-400 font-normal">ستظهر هذه الملاحظات في إشعار مقدم الطلب</span>
+          </label>
+          <textarea id="ministryNotesInput" rows="3" class="w-full text-xs p-3 border border-gray-200 rounded-xl focus:border-[#127845] focus:outline-none transition shadow-2xs">بناءً على اكتمال تأسيس الشركة الجديدة وثبوت موافقة المفوض وتطابق الأنشطة الزراعية بنسبة 100%، يوصى باعتماد نقل التراخيص للكيان الجديد.</textarea>
+        </div>
+
+        <!-- 3 Decision Buttons -->
+        <div class="pt-4 border-t border-gray-200 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <!-- Reject Button -->
+            <button onclick="onMinistryAction('reject')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              <span>رفض الطلب</span>
+            </button>
+            <!-- Return Button -->
+            <button onclick="onMinistryAction('return')" class="bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold py-2.5 px-4 rounded-xl transition flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              <span>إرجاع الطلب لاستكمال النواقص</span>
+            </button>
+          </div>
+          <!-- Approve Button -->
+          <button onclick="onMinistryAction('approve')" class="bg-[#127845] hover:bg-[#0e6338] text-white text-xs font-bold py-3 px-7 rounded-xl shadow-md transition flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>قبول الطلب واعتماد نقل التراخيص رسمياً</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: OFFICIAL SERVICE CONDITIONS CARD                  -->
+  <!-- ======================================================== -->
+  <div id="modal_serviceSpecs" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100">
+      <div class="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#eaf6ee] text-[#127845] flex items-center justify-center font-bold">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900">بطاقة مواصفات واشتراطات الخدمة</h3>
+            <p class="text-xs text-gray-500">منصة نما — وزارة البيئة والمياه والزراعة</p>
+          </div>
+        </div>
+        <button onclick="closeCardModal()" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center">✕</button>
+      </div>
+
+      <div class="p-6 space-y-4 text-xs text-gray-700 leading-relaxed">
+        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200">
+          <span class="font-bold text-gray-900 block mb-1">اسم الخدمة: نقل وتصحيح تراخيص السجلات التجارية</span>
+          <p>خدمة تمكن قطاع الأعمال من توفيق أوضاع السجلات الفرعية ونقل التراخيص الصادرة وقيد المعالجة مباشرة للسجل الرئيسي أو لشركة جديدة.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 font-bold text-[#127845]">الرسوم: مجانية بالكامل</div>
+          <div class="p-3 rounded-xl bg-gray-50 border border-gray-200 font-bold">المستندات: ربط إلكتروني تكاملي فوري</div>
+        </div>
+        <div class="pt-2">
+          <h4 class="font-bold text-gray-900 mb-2">أهم الشروط:</h4>
+          <ul class="space-y-1.5 list-disc list-inside text-gray-600">
+            <li>أن يكون السجل المستهدف (الرئيسي أو الشركة الجديدة) مسجلاً ومفعلاً في منصة نما.</li>
+            <li>تطابق الأنشطة الاقتصادية للترخيص مع السجل المستلم.</li>
+            <li>شطب السجل الفرعي في مسار الدمج، أو سريان سجل الشركة الجديدة في مسار التأسيس.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 px-6 py-4 border-t border-gray-100 flex items-center justify-between">
+        <button onclick="closeCardModal()" class="text-xs font-bold text-gray-500">إغلاق</button>
+        <button onclick="closeCardModal(); goToStep('apply');" class="bg-[#127845] text-white text-xs font-bold py-2.5 px-6 rounded-xl">بدء التقديم الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT STATE ENGINE FOR THE COMPLETE JOURNEY         -->
+  <!-- ======================================================== -->
+  <script>
+    let currentFlowPath = 'merge'; // 'merge' or 'newCompany'
+    let isMainInNamaa = true;
+    let isNewCoInNamaa = true;
+    let activeStep = 'directory';
+
+    function goToStep(step) {
+      activeStep = step;
+      const steps = ['directory', 'apply', 'approver', 'ministry'];
+      steps.forEach(s => {
+        const el = document.getElementById('step_' + s);
+        const btn = document.getElementById('tabBtn_' + s);
+        if (el) el.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('bg-[#127845]', 'text-white', 'shadow-xs');
+          btn.classList.add('bg-[#0e5c32]/70', 'text-emerald-100');
+        }
+      });
+
+      const currentEl = document.getElementById('step_' + step);
+      const currentBtn = document.getElementById('tabBtn_' + step);
+      if (currentEl) currentEl.classList.remove('hidden');
+      if (currentBtn) {
+        currentBtn.classList.remove('bg-[#0e5c32]/70', 'text-emerald-100');
+        currentBtn.classList.add('bg-[#127845]', 'text-white', 'shadow-xs');
+      }
+
+      // Update session header label based on step
+      const sessionDisplay = document.getElementById('topSessionCR');
+      if (step === 'directory' || step === 'apply') {
+        sessionDisplay.innerText = "7001811954 (فرعي)";
+      } else if (step === 'approver') {
+        sessionDisplay.innerText = currentFlowPath === 'merge' ? "7001560993 (مفوض الرئيسي)" : "7002998114 (مفوض الشركة الجديدة)";
+      } else if (step === 'ministry') {
+        sessionDisplay.innerText = "موظف التراخيص (الوزارة)";
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function onPathSelectionChange(path) {
+      currentFlowPath = path;
+      const cardMerge = document.getElementById('card_opt_merge');
+      const cardNew = document.getElementById('card_opt_newCompany');
+      const containerMerge = document.getElementById('container_path_merge');
+      const containerNew = document.getElementById('container_path_newCompany');
+      const submitBtnLabel = document.getElementById('txt_submitBtnLabel');
+
+      if (path === 'merge') {
+        containerMerge.classList.remove('hidden');
+        containerNew.classList.add('hidden');
+        cardMerge.classList.add('border-2', 'border-[#127845]', 'bg-[#eaf6ee]/40');
+        cardMerge.classList.remove('border-gray-200', 'bg-white');
+        cardNew.classList.remove('border-2', 'border-[#127845]', 'bg-[#eaf6ee]/40');
+        cardNew.classList.add('border-gray-200', 'bg-white');
+        submitBtnLabel.innerText = "إرسال الطلب إلى مفوض السجل الرئيسي للموافقة";
+        checkSubmitButtonState(isMainInNamaa);
+      } else {
+        containerMerge.classList.add('hidden');
+        containerNew.classList.remove('hidden');
+        cardNew.classList.add('border-2', 'border-[#127845]', 'bg-[#eaf6ee]/40');
+        cardNew.classList.remove('border-gray-200', 'bg-white');
+        cardMerge.classList.remove('border-2', 'border-[#127845]', 'bg-[#eaf6ee]/40');
+        cardMerge.classList.add('border-gray-200', 'bg-white');
+        submitBtnLabel.innerText = "إرسال الطلب إلى مفوض الشركة الجديدة أولاً للموافقة";
+        checkSubmitButtonState(isNewCoInNamaa);
+      }
+
+      // Configure Approver screen text
+      configureApproverScreen();
+    }
+
+    function checkSubmitButtonState(isValid) {
+      const btn = document.getElementById('btn_submit_request');
+      if (isValid) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-40', 'cursor-not-allowed');
+      } else {
+        btn.disabled = true;
+        btn.classList.add('opacity-40', 'cursor-not-allowed');
+      }
+    }
+
+    function toggleMainInNamaa(exists) {
+      isMainInNamaa = exists;
+      document.getElementById('alert_mainInNamaa_success').classList.toggle('hidden', !exists);
+      document.getElementById('alert_mainInNamaa_error').classList.toggle('hidden', exists);
+      document.getElementById('simBtn_mainExists').className = exists ? "px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300" : "px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300";
+      document.getElementById('simBtn_mainNotExists').className = exists ? "px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300" : "px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-300";
+      if (currentFlowPath === 'merge') checkSubmitButtonState(exists);
+    }
+
+    function toggleNewCompanyInNamaa(exists) {
+      isNewCoInNamaa = exists;
+      document.getElementById('alert_newInNamaa_success').classList.toggle('hidden', !exists);
+      document.getElementById('alert_newInNamaa_error').classList.toggle('hidden', exists);
+      document.getElementById('box_newCompanyActivities').classList.toggle('hidden', !exists);
+      document.getElementById('simBtn_newExists').className = exists ? "px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold border border-emerald-300" : "px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300";
+      document.getElementById('simBtn_newNotExists').className = exists ? "px-2 py-0.5 rounded bg-gray-100 text-gray-600 border border-gray-300" : "px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold border border-rose-300";
+      if (currentFlowPath === 'newCompany') checkSubmitButtonState(exists);
+    }
+
+    function configureApproverScreen() {
+      const badgeRole = document.getElementById('badge_approverRole');
+      const title = document.getElementById('title_approverHeader');
+      const subtitle = document.getElementById('sub_approverHeader');
+      const targetLabel = document.getElementById('badge_approverTargetLabel');
+      const targetCR = document.getElementById('txt_approverTargetCR');
+      const targetName = document.getElementById('txt_approverTargetName');
+      const noticeDirect = document.getElementById('notice_approverDirect');
+      const noticeNew = document.getElementById('notice_approverNewCompany');
+      const btnLabel = document.getElementById('txt_approverBtnLabel');
+
+      if (currentFlowPath === 'merge') {
+        badgeRole.innerText = "جلسة مفوض السجل التجاري الرئيسي";
+        title.innerText = "اعتماد واستلام تراخيص السجل الفرعي المشطوب";
+        subtitle.innerText = "السجل الرئيسي المستلم: 7001560993 (شركة النخيل أجري الزراعية)";
+        targetLabel.innerText = "السجل المحال إليه (الرئيسي):";
+        targetCR.innerText = "7001560993";
+        targetName.innerText = "شركة النخيل أجري الزراعية (المركز الرئيسي)";
+        noticeDirect.classList.remove('hidden');
+        noticeNew.classList.add('hidden');
+        btnLabel.innerText = "أوافق على استلام التراخيص وتنفيذ النقل الفوري";
+      } else {
+        badgeRole.innerText = "جلسة مفوض الشركة الجديدة المؤسسة";
+        title.innerText = "اعتماد واستلام تراخيص الفرع للشركة الجديدة";
+        subtitle.innerText = "سجل الشركة الجديدة المستلمة: 7002998114 (شركة النخيل للصناعات الزراعية المتقدمة)";
+        targetLabel.innerText = "الكيان المحال إليه (الشركة الجديدة):";
+        targetCR.innerText = "7002998114";
+        targetName.innerText = "شركة النخيل للصناعات الزراعية المتقدمة";
+        noticeDirect.classList.add('hidden');
+        noticeNew.classList.remove('hidden');
+        btnLabel.innerText = "أوافق على استلام التراخيص وإحالة المعاملة للوزارة للاعتماد";
+      }
+    }
+
+    function onSubmitApplication() {
+      if (currentFlowPath === 'merge') {
+        alert("تم إرسال الطلب بنجاح! تم توجيه المعاملة إلى صندوق وارد مفوض السجل الرئيسي للموافقة.");
+        goToStep('approver');
+      } else {
+        alert("تم إرسال الطلب بنجاح! تم توجيه المعاملة أولاً إلى مفوض الشركة الجديدة (7002998114) للموافقة قبل رفعها للوزارة.");
+        goToStep('approver');
+      }
+    }
+
+    function onExecuteApproverDecision() {
+      const isAgreed = document.getElementById('chk_approverConsent').checked;
+      if (!isAgreed) {
+        alert("يرجى تأكيد الإقرار بالموافقة على استلام التراخيص والمسؤوليات أولاً.");
+        return;
+      }
+
+      if (currentFlowPath === 'merge') {
+        alert("تهانينا! وافق مفوض السجل التجاري الرئيسي على استلام التراخيص.\n\n" +
+              "✅ تم النقل الفوري لكافة التراخيص والأنشطة إلى السجل الرئيسي آلياً دون الحاجة لمراجعة موظفي الوزارة.\n" +
+              "🔒 تم حظر التعامل على السجل الفرعي رسمياً.\n" +
+              "🚫 تم إيقاف وتجميد صلاحيات كافة المفوضين على السجل الفرعي.\n" +
+              "⚡ تم نقل كافة الطلبات الجاري معالجتها إلى السجل الرئيسي، وأصبح بإمكان مفوضيه استكمال العمل عليها ومتابعتها.");
+        goToStep('directory');
+      } else {
+        const now = new Date();
+        document.getElementById('ministry_txtApprovalDate').innerText = "1448/03/22هـ — " + now.toLocaleTimeString('ar-SA');
+        alert("تم تسجيل موافقة مفوض الشركة الجديدة رسمياً!\n\nتم تصعيد المعاملة الآن تلقائياً إلى وزارة البيئة والمياه والزراعة للدراسة الفنية والاعتماد النهائي.");
+        goToStep('ministry');
+      }
+    }
+
+    function onMinistryAction(action) {
+      const notes = document.getElementById('ministryNotesInput').value.trim();
+
+      if (action === 'approve') {
+        alert("✅ قرار موظف الوزارة: [قبول الطلب]\n\n" +
+              "1️⃣ تم اعتماد نقل التراخيص للشركة الجديدة بنجاح، وتحديث بيانات السجل التجاري وإصدار التراخيص المعتمدة.\n" +
+              "2️⃣ تم حظر التعامل على السجل الفرعي فورياً وإقفال حسابه.\n" +
+              "3️⃣ تم إيقاف وتجميد صلاحيات كافة المفوضين المعتمدين على السجل الفرعي.\n" +
+              "4️⃣ تم نقل كافة الطلبات الجاري معالجتها بنجاح إلى الشركة الجديدة، ومُنح مفوضو الشركة الجديدة الصلاحية الكاملة لاستكمال العمل عليها.");
+        goToStep('directory');
+      } else if (action === 'return') {
+        if (!notes) {
+          alert("يرجى كتابة ملاحظات النواقص قبل إرجاع الطلب.");
+          return;
+        }
+        alert("🟡 تم إرجاع الطلب لمقدمه لاستكمال النواقص:\n\"" + notes + "\"");
+        goToStep('apply');
+      } else if (action === 'reject') {
+        if (!notes) {
+          alert("يرجى كتابة أسباب الرفض النظامية.");
+          return;
+        }
+        alert("🔴 تم رفض الطلب رسمياً بالمسوغات:\n\"" + notes + "\"");
+        goToStep('directory');
+      }
+    }
+
+    function openCardModal() {
+      document.getElementById('modal_serviceSpecs').classList.remove('hidden');
+    }
+    function closeCardModal() {
+      document.getElementById('modal_serviceSpecs').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
